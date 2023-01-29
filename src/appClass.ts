@@ -1,12 +1,12 @@
 class House {
-  private street: string;
   private tenats: string[] = [];
 
-  constructor(n: string) {
-    this.street = n;
-  }
+  constructor(public readonly type: string, private street: string) {}
+
   public showAdrees(this: House, add: string): void {
-    console.log("Adrees " + this.street + " " + add);
+    console.log(
+      "Adrees " + this.street + " " + this.type + " " + add + " " + this.type
+    );
   }
   public addTenant(name: string) {
     this.tenats.push(name);
@@ -15,10 +15,30 @@ class House {
     console.log(this.tenats);
   }
 }
-const house = new House("Krivbas");
+const house = new House("city", "Krivbas");
 const house2 = { showAdrees: house.showAdrees, street: "Kiyv" };
 
-house.showAdrees("street");
+house.showAdrees("Bila Tscerkva");
 house.addTenant("Toxa");
 house.addTenant("Max");
 house.showTenants();
+
+class StounHouse extends House {
+  private chargeOfTheHouse: string;
+  constructor(street: string, general: string) {
+    super("village", street);
+
+    this.chargeOfTheHouse = general;
+  }
+  public showTenants() {
+    console.log("General " + this.chargeOfTheHouse);
+
+    super.showTenants();
+  }
+}
+
+const stounHouse = new StounHouse("villa", "Toxa");
+
+stounHouse.addTenant("Luba");
+stounHouse.addTenant("Toxa");
+stounHouse.showTenants();
